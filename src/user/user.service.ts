@@ -17,8 +17,8 @@ export class UserService {
 
     async add(user: User): Promise<User> {
         var userdata = await this.userRepository.createQueryBuilder("user")
-            .where("user.Email = :Email",{Email: user.Email})
-            .orWhere("user.Username = :Username", {Username: user.Username})
+            .where("user.email = :email",{email: user.email})
+            .orWhere("user.username = :username", {username: user.username})
             .getOne();
 
         if (userdata) {
@@ -28,11 +28,11 @@ export class UserService {
     }
 
     getByEmail(email: string): Promise<User> {
-        return this.userRepository.findOne({ where: { Email: email } })
+        return this.userRepository.findOne({ where: { email: email } })
     }
 
     async getCurrentUser(email: string): Promise<UserDto> {
-        var user = await this.userRepository.findOne({ where: { Email: email } })
-        return {email: user.Email, firstName: user.FirstName, lastName: user.LastName, username:user.Username}
+        var user = await this.userRepository.findOne({ where: { email: email } })
+        return {email: user.email, firstName: user.firstName, lastName: user.lastName, username:user.username}
     }
 }

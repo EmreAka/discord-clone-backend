@@ -15,23 +15,23 @@ export class AuthService {
 
         //const crypto = require('crypto');
         //var salt = crypto.randomBytes(128); use this to generate salt.
-        const hmac = createHmac('SHA512', data.PasswordSalt);
+        const hmac = createHmac('SHA512', data.passwordSalt);
         hmac.update(user.password);
         const computedHash: Buffer = hmac.digest();
 
-        if (Buffer.compare(computedHash, data.PasswordHash) === 0) {
-            return this.signToken(data.Id, data.Email, data.Username);
+        if (Buffer.compare(computedHash, data.passwordHash) === 0) {
+            return this.signToken(data.id, data.email, data.username);
         }
         throw new BadRequestException("Wrong credentials");
     }
 
     signup(signupUserDto: SignupUserDto): Promise<User> {
         const user: User = new User();
-        user.Email = signupUserDto.email;
-        user.FirstName = signupUserDto.firstName;
-        user.LastName = signupUserDto.lastName;
-        user.Username = signupUserDto.userName;
-        user.Status = true;
+        user.email = signupUserDto.email;
+        user.firstName = signupUserDto.firstName;
+        user.lastName = signupUserDto.lastName;
+        user.username = signupUserDto.userName;
+        user.status = true;
 
         //salt and hash the password
         var salt = randomBytes(128);
@@ -39,8 +39,8 @@ export class AuthService {
         hmac.update(signupUserDto.password);
         const computedHash: Buffer = hmac.digest();
 
-        user.PasswordSalt = salt;
-        user.PasswordHash = computedHash;
+        user.passwordSalt = salt;
+        user.passwordHash = computedHash;
 
         return this.userService.add(user);
     }

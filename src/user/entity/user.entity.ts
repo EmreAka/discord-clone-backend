@@ -1,21 +1,21 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("Users")
+@Entity("users")
 export class User {
     @PrimaryGeneratedColumn()
-    Id: number;
+    id: number;
     @Column()
-    FirstName: string;
+    firstName: string;
     @Column()
-    LastName: string;
+    lastName: string;
     @Column({unique: true})
-    Email: string;
+    email: string;
     @Column({unique: true})
-    Username:string;
+    username:string;
     @Column({ type: "bytea" })
-    PasswordSalt: Buffer;
+    passwordSalt: Buffer;
     @Column({ type: "bytea" })
-    PasswordHash: Buffer;
+    passwordHash: Buffer;
     @Column()
-    Status: boolean;
+    status: boolean;
 }
