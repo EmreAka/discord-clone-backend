@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Request, UseGuards } 
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('User')
@@ -16,7 +17,7 @@ export class UserController {
 
     @Get("me")
     @UseGuards(AuthGuard("jwt"))
-    get(@Request() req) {
+    get(@Request() req): Promise<UserDto> {
         return this.userService.getCurrentUser(req.user.email);
     }
 }
