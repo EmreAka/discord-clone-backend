@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
@@ -22,7 +22,7 @@ export class UserService {
             .getOne();
 
         if (userdata) {
-            throw new ForbiddenException("A user is already registered with these credentials.");
+            throw new BadRequestException("A user is already registered with these credentials.");
         }
         return this.userRepository.save(user);
     }

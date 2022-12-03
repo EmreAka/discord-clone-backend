@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entity/user.entity';
 import { UserService } from 'src/user/user.service';
@@ -22,7 +22,7 @@ export class AuthService {
         if (Buffer.compare(computedHash, data.PasswordHash) === 0) {
             return this.signToken(data.Id, data.Email, data.Username);
         }
-        throw new ForbiddenException("Wrong credentials");
+        throw new BadRequestException("Wrong credentials");
     }
 
     signup(signupUserDto: SignupUserDto): Promise<User> {
