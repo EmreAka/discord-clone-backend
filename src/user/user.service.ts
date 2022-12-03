@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
@@ -15,7 +15,15 @@ export class UserService {
         return this.userRepository.find();
     }
 
-    add(user: User): Promise<User> {
+    async add(user: User): Promise<User> {
+        var userdata = await this.userRepository.createQueryBuilder("user")
+            .where("user.Email = :Email",{Email: user.Email})
+            .orWhere("user.Username = :Username", {Username: user.Username})
+            .getOne();
+
+        if (userdata) {
+            throw new ForbiddenException("A user is already registered with these credentials.");
+        }
         return this.userRepository.save(user);
     }
 
