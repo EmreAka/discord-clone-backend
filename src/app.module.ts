@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -16,7 +15,7 @@ import { UserModule } from './user/user.module';
       username: process.env.LOCAL_DATABASE_USERNAME,
       password: process.env.LOCAL_DATABASE_PASSWORD,
       database: process.env.LOCAL_DATABASE_DATABASE,
-      entities: [],
+      entities: [User],
       synchronize: true,
       // ssl: {
       //   rejectUnauthorized: false,
@@ -24,8 +23,6 @@ import { UserModule } from './user/user.module';
     }),
     UserModule,
     AuthModule
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {}

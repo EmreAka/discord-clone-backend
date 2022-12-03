@@ -20,7 +20,7 @@ export class AuthService {
         const computedHash: Buffer = hmac.digest();
 
         if (Buffer.compare(computedHash, data.PasswordHash) === 0) {
-            return this.signToken(data.Id, data.Email);
+            return this.signToken(data.Id, data.Email, data.Username);
         }
         throw new ForbiddenException("Wrong credentials");
     }
@@ -30,6 +30,7 @@ export class AuthService {
         user.Email = signupUserDto.email;
         user.FirstName = signupUserDto.firstName;
         user.LastName = signupUserDto.lastName;
+        user.Username = signupUserDto.userName;
         user.Status = true;
 
         //salt and hash the password
@@ -44,8 +45,8 @@ export class AuthService {
         return this.userService.add(user);
     }
 
-    private signToken(userId: number, email: string): Promise<string> {
-        const data = { sub: userId, email: email }
+    private signToken(userId: number, email: string, username: string): Promise<string> {
+        const data = { sub: userId, email: email , username: username}
 
         return this.jwt.signAsync(data, {
             expiresIn: '15m',

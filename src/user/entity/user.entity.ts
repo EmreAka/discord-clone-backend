@@ -8,8 +8,10 @@ export class User {
     FirstName: string;
     @Column()
     LastName: string;
-    @Column()
+    @Column({unique: true})
     Email: string;
+    @Column({unique: true})
+    Username:string;
     @Column({ type: "bytea" })
     PasswordSalt: Buffer;
     @Column({ type: "bytea" })

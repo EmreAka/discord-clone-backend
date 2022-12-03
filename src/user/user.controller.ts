@@ -14,9 +14,9 @@ export class UserController {
         return this.userService.getAll();
     }
 
-    @UseGuards(AuthGuard("jwt"))
     @Get("me")
+    @UseGuards(AuthGuard("jwt"))
     get(@Request() req) {
-        return this.userService.getByEmail(req.user.email);
+        return this.userService.getCurrentUser(req.user.email);
     }
 }
