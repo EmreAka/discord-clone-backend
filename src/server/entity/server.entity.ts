@@ -1,5 +1,6 @@
+import Category from "src/category/entity/category.entity";
 import { User } from "src/user/entity/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("servers")
 export class Server{
@@ -18,4 +19,7 @@ export class Server{
     @ManyToMany(() => User, (user) => user.servers)
     @JoinTable()
     users: User[]
+
+    @OneToMany(() => Category, (category) => category.server)
+    categories: Category[]
 }
