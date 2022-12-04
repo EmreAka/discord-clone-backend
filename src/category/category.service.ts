@@ -26,4 +26,12 @@ export class CategoryService {
         const categoryCreated = await this.categoryRepository.save(category);
         return { id: categoryCreated.id, name: categoryCreated.name }
     }
+
+    getById(id: number){
+        return this.categoryRepository.find({where: {id: id}})
+    }
+
+    getByServerId(serverId: number){
+        return this.categoryRepository.find({where: {server: {id: serverId}}})
+    }
 }
