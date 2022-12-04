@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ServerService } from 'src/server/server.service';
 import { Repository } from 'typeorm';
@@ -17,7 +17,7 @@ export class CategoryService {
         const server = await this.serverService.getById(createCategoryDto.serverId);
 
         if (server.founder.id !== userId) {
-            throw new UnauthorizedException("You cannot create a category for the server that doesn't belong to you!")
+            throw new ForbiddenException("You cannot create a category for the server that doesn't belong to you!")
         }
 
         let category = this.categoryRepository.create(createCategoryDto)
@@ -31,7 +31,7 @@ export class CategoryService {
         return this.categoryRepository.find({where: {id: id}})
     }
 
-    getByServerId(serverId: number){
+    getAllByServerId(serverId: number){
         return this.categoryRepository.find({where: {server: {id: serverId}}})
     }
 }

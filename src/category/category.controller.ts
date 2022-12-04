@@ -18,9 +18,9 @@ export class CategoryController {
     getById(@Param('id', ParseIntPipe) id:number){
         return this.categoryService.getById(id);
     }
-    
+
     @Get('')
-    getByServerId(@Query('serverId', ParseIntPipe) serverId: number){
-        return this.categoryService.getByServerId(serverId);
+    getAllByServerId(@Query('serverId', ParseIntPipe) serverId: number){
+        return this.categoryService.getAllByServerId(serverId);
     }
 }
