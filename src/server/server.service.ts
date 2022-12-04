@@ -26,6 +26,7 @@ export class ServerService {
         return this.serverRepository.createQueryBuilder('server')
         .leftJoinAndSelect("server.users", "users")
         .where("users.id = :id", {id: userId})
+        .select(['server.id', 'server.name', 'server.description', 'server.imagePath',])
         .getMany();
     }
 
