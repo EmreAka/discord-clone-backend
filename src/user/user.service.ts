@@ -31,6 +31,10 @@ export class UserService {
         return this.userRepository.findOne({ where: { email: email } })
     }
 
+    getById(id: number){
+        return this.userRepository.findOne({where:{id: id}})
+    }
+
     async getCurrentUser(email: string): Promise<UserDto> {
         const {firstName, lastName, username } = await this.userRepository.findOne({ where: { email: email } })
         return { email, firstName, lastName, username }
