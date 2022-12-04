@@ -11,6 +11,9 @@ import { ServerService } from './server.service';
   imports:[
     TypeOrmModule.forFeature([Server]),
     UserModule,
+  ],
+  exports: [
+    ServerService
   ]
 })
 export class ServerModule {}

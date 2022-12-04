@@ -18,6 +18,12 @@ export class ServerService {
         return this.serverRepository.save(server);
     }
 
+    getById(id: number){
+        return this.serverRepository.findOne({where: {id: id}, relations: {
+            founder: true
+        }});
+    }
+
     getAll(){
         return this.serverRepository.find();
     }
