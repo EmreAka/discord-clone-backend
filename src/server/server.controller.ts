@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import CreateServerDto from './dto/create-server.dto';
 import { ServerService } from './server.service';
@@ -20,8 +20,9 @@ export class ServerController {
         return this.serverService.getAll();
     }
 
-    @Post('enroll/:userId/:serverId')
-    enroll(@Param('userId', ParseIntPipe) userId: number, @Param('serverId', ParseIntPipe)serverId: number){
+    @Post(':serverId')
+    enroll(@Request() req, @Param('serverId', ParseIntPipe)serverId: number){
+        const userId = req.user.userId;
         return this.serverService.enroll(userId, serverId)
     }
 }

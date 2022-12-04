@@ -24,9 +24,11 @@ export class ServerService {
 
     async enroll(userId: number, serverId: number){
         const user = await this.userService.getById(userId);
-        let server = await this.serverRepository.findOne({where:{id: serverId}})
+        let server = await this.serverRepository.findOne({where:{id: serverId}, relations: {
+            users: true
+        }})
 
-        server.users = [user]
+        server.users.push(user)
 
         this.serverRepository.save(server);
     }
