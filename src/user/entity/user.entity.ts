@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Server } from "src/server/entity/server.entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class User {
@@ -18,4 +19,7 @@ export class User {
     passwordHash: Buffer;
     @Column()
     status: boolean;
+
+    @ManyToMany(() => Server, (server) => server.users)
+    servers: Server[]
 }

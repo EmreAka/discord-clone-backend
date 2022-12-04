@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 import { ServerModule } from './server/server.module';
+import { Server } from './server/entity/server.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { ServerModule } from './server/server.module';
       username: process.env.LOCAL_DATABASE_USERNAME,
       password: process.env.LOCAL_DATABASE_PASSWORD,
       database: process.env.LOCAL_DATABASE_DATABASE,
-      entities: [User],
+      entities: [User, Server],
       synchronize: true,
       // ssl: {
       //   rejectUnauthorized: false,
