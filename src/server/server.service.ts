@@ -22,6 +22,13 @@ export class ServerService {
         return this.serverRepository.find();
     }
 
+    getAllByUserId(userId: number){
+        return this.serverRepository.createQueryBuilder('server')
+        .leftJoinAndSelect("server.users", "users")
+        .where("users.id = :id", {id: userId})
+        .getMany();
+    }
+
     async enroll(userId: number, serverId: number){
         const user = await this.userService.getById(userId);
         let server = await this.serverRepository.findOne({where:{id: serverId}, relations: {

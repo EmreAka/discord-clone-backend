@@ -15,9 +15,15 @@ export class ServerController {
         return this.serverService.add(createServerDto)
     }
 
-    @Get()
+    @Get('')
     getAll(){
         return this.serverService.getAll();
+    }
+
+    @Get('enrolled')
+    getAllByUserId(@Request() req){
+        const userId = req.user.userId;
+        return this.serverService.getAllByUserId(userId);
     }
 
     @Post(':serverId')
