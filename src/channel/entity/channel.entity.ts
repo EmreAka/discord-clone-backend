@@ -12,6 +12,6 @@ export class Channel{
     @Column()
     description: string
 
-    @ManyToOne(() => Category)
+    @ManyToOne(() => Category, (category) => category.channels)
     category: Category
 }

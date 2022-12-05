@@ -32,6 +32,12 @@ export class CategoryService {
     }
 
     getAllByServerId(serverId: number){
-        return this.categoryRepository.find({where: {server: {id: serverId}}})
+        return this.categoryRepository.find({
+            where: {server: {id: serverId},
+        },
+        relations: {
+            channels: true
+        }
+    })
     }
 }
