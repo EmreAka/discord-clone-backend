@@ -19,6 +19,8 @@ export class User {
     passwordHash: Buffer;
     @Column()
     status: boolean;
+    @Column({nullable: true})
+    imagePath: string;
 
     @ManyToMany(() => Server, (server) => server.users)
     servers: Server[]

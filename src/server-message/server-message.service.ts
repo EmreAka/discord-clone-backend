@@ -46,6 +46,7 @@ export class ServerMessageService {
                     id: true,
                     username: true,
                     status: true,
+                    imagePath: true
                 }
             }
         })

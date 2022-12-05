@@ -36,7 +36,16 @@ export class UserService {
     }
 
     async getCurrentUser(email: string): Promise<UserDto> {
-        const {firstName, lastName, username } = await this.userRepository.findOne({ where: { email: email } })
-        return { email, firstName, lastName, username }
+        return this.userRepository.findOne({
+            where: { email: email } ,
+            select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+                username: true,
+                imagePath: true
+            }
+        })
     }
 }
