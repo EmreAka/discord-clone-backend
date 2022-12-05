@@ -13,16 +13,16 @@ export class ServerMessageService {
         private serverMessageRepository: Repository<ServerMessage>,
         private channelService: ChannelService,
         private serverService: ServerService
-    ) {}
+    ) { }
 
-    async add(createServerMessageDto: CreateServerMessageDto, userId: number){
+    async add(createServerMessageDto: CreateServerMessageDto, userId: number) {
         const server = await this.serverService.getById(createServerMessageDto.serverId);
 
         if (server.founder.id !== userId) {
             throw new ForbiddenException("This server is not yours")
         }
 
-        const channel = await this.channelService.getById(createServerMessageDto.channelId);
+        const channel = await this.channelService.getByChannelId(createServerMessageDto.channelId);
 
         const message = this.serverMessageRepository.create(createServerMessageDto);
         message.channel = channel
@@ -31,11 +31,24 @@ export class ServerMessageService {
         return this.serverMessageRepository.save(message);
     }
 
-    getAllByChannelId(channelId: number){
-        return this.serverMessageRepository.find({
+    async getAllByChannelId(channelId: number) {
+        const message = await this.serverMessageRepository.find({
             where: {
-                channel: {id: channelId}
+                channel: { id: channelId }
+            },
+            relations: {
+                user: true,
+            },
+            select: {
+                id: true,
+                message: true,
+                user: {
+                    id: true,
+                    username: true,
+                    status: true,
+                }
             }
         })
+        return message;
     }
 }
