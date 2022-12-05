@@ -30,4 +30,12 @@ export class ServerMessageService {
 
         return this.serverMessageRepository.save(message);
     }
+
+    getAllByChannelId(channelId: number){
+        return this.serverMessageRepository.find({
+            where: {
+                channel: {id: channelId}
+            }
+        })
+    }
 }

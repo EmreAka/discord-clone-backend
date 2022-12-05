@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateServerMessageDto } from './dto/create-server-message.dto';
 import { ServerMessageService } from './server-message.service';
@@ -15,5 +15,10 @@ export class ServerMessageController {
     add(@Body() createServerMessageDto: CreateServerMessageDto, @Request() req){
         const userId = req.user.userId
         return this.serverMessageService.add(createServerMessageDto, userId);
+    }
+
+    @Get(':channelId')
+    getByChannelId(@Param('channelId', ParseIntPipe) channelId: number){
+        return this.serverMessageService.getAllByChannelId(channelId);
     }
 }
