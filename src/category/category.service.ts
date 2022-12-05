@@ -28,7 +28,7 @@ export class CategoryService {
     }
 
     getById(id: number){
-        return this.categoryRepository.find({where: {id: id}})
+        return this.categoryRepository.findOne({where: {id: id}})
     }
 
     getAllByServerId(serverId: number){

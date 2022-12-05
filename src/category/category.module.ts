@@ -11,6 +11,9 @@ import { ServerModule } from 'src/server/server.module';
   imports: [
     TypeOrmModule.forFeature([Category]),
     ServerModule,
+  ],
+  exports: [
+    CategoryService
   ]
 })
 export class CategoryModule {}
