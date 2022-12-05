@@ -28,4 +28,12 @@ export class ChannelService {
 
         return this.channelRepository.save(channel)
     }
+
+    getById(channelId: number){
+        return this.channelRepository.findOne({
+            where: {
+                id: channelId
+            }
+        })
+    }
 }

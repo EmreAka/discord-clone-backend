@@ -10,6 +10,8 @@ import { CategoryModule } from './category/category.module';
 import { ChannelModule } from './channel/channel.module';
 import Category from './category/entity/category.entity';
 import { Channel } from './channel/entity/channel.entity';
+import { ServerMessageModule } from './server-message/server-message.module';
+import { ServerMessage } from './server-message/entity/server-message.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,13 @@ import { Channel } from './channel/entity/channel.entity';
       username: process.env.LOCAL_DATABASE_USERNAME,
       password: process.env.LOCAL_DATABASE_PASSWORD,
       database: process.env.LOCAL_DATABASE_DATABASE,
-      entities: [User, Server, Category, Channel],
+      entities: [
+        User,
+        Server,
+        Category,
+        Channel,
+        ServerMessage
+      ],
       synchronize: true,
       // ssl: {
       //   rejectUnauthorized: false,
@@ -31,7 +39,8 @@ import { Channel } from './channel/entity/channel.entity';
     AuthModule,
     ServerModule,
     CategoryModule,
-    ChannelModule
+    ChannelModule,
+    ServerMessageModule
   ]
 })
-export class AppModule {}
+export class AppModule { }

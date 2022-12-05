@@ -13,6 +13,9 @@ import { CategoryModule } from 'src/category/category.module';
     TypeOrmModule.forFeature([Channel]),
     ServerModule,
     CategoryModule
-]
+  ],
+  exports: [
+    ChannelService
+  ]
 })
 export class ChannelModule {}
