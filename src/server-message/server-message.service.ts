@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChannelService } from 'src/channel/channel.service';
 import { ServerService } from 'src/server/server.service';
+import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { CreateServerMessageDto } from './dto/create-server-message.dto';
 import { ServerMessage } from './entity/server-message.entity';
@@ -12,21 +13,24 @@ export class ServerMessageService {
         @InjectRepository(ServerMessage)
         private serverMessageRepository: Repository<ServerMessage>,
         private channelService: ChannelService,
-        private serverService: ServerService
+        private serverService: ServerService,
+        private userService: UserService
     ) { }
 
     async add(createServerMessageDto: CreateServerMessageDto, userId: number) {
         const server = await this.serverService.getById(createServerMessageDto.serverId);
-
-        if (server.founder.id !== userId) {
-            throw new ForbiddenException("This server is not yours")
-        }
+        
+        //hangi kafayla yazdın bunu amk
+        // if (server.founder.id !== userId) {
+        //     throw new ForbiddenException("This server is not yours")
+        // }
 
         const channel = await this.channelService.getByChannelId(createServerMessageDto.channelId);
 
         const message = this.serverMessageRepository.create(createServerMessageDto);
         message.channel = channel
         message.server = server
+        message.user = await this.userService.getById(userId)
 
         return this.serverMessageRepository.save(message);
     }
@@ -42,12 +46,16 @@ export class ServerMessageService {
             select: {
                 id: true,
                 message: true,
+                createdAt: true,
                 user: {
                     id: true,
                     username: true,
                     status: true,
                     imagePath: true
                 }
+            },
+            order: {
+                createdAt: 'ASC'
             }
         })
         return message;

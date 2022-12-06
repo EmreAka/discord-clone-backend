@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServerMessage } from './entity/server-message.entity';
 import { ServerModule } from 'src/server/server.module';
 import { ChannelModule } from 'src/channel/channel.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   providers: [ServerMessageService],
@@ -12,7 +13,8 @@ import { ChannelModule } from 'src/channel/channel.module';
   imports: [
     TypeOrmModule.forFeature([ServerMessage]),
     ServerModule,
-    ChannelModule
+    ChannelModule,
+    UserModule
   ]
 })
 export class ServerMessageModule {}

@@ -20,7 +20,7 @@ export class Server{
     founder:User
 
     @ManyToMany(() => User, (user) => user.servers)
-    @JoinTable()
+    @JoinTable({name: 'enrolled_users'})
     users: User[]
 
     @OneToMany(() => Category, (category) => category.server)
