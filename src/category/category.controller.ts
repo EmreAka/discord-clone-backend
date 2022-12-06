@@ -20,7 +20,8 @@ export class CategoryController {
     }
 
     @Get('')
-    getAllByServerId(@Query('serverId', ParseIntPipe) serverId: number){
-        return this.categoryService.getAllByServerId(serverId);
+    getAllByServerId(@Query('serverId', ParseIntPipe) serverId: number, @Request() req){
+        const userId = req.user.userId
+        return this.categoryService.getAllByServerId(serverId, userId);
     }
 }

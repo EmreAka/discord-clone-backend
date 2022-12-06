@@ -31,7 +31,14 @@ export class CategoryService {
         return this.categoryRepository.findOne({where: {id: id}})
     }
 
-    getAllByServerId(serverId: number){
+    async getAllByServerId(serverId: number, userId: number){
+        const server = await this.serverService.getAllByUserId(userId);
+        const x = server.find(s => s.id === serverId)
+        
+        if (x == null) {
+            throw new ForbiddenException();
+        }
+
         return this.categoryRepository.find({
             where: {server: {id: serverId},
         },

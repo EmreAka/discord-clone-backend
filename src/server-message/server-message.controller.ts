@@ -18,7 +18,8 @@ export class ServerMessageController {
     }
 
     @Get(':channelId')
-    getByChannelId(@Param('channelId', ParseIntPipe) channelId: number){
-        return this.serverMessageService.getAllByChannelId(channelId);
+    getByChannelId(@Param('channelId', ParseIntPipe) channelId: number, @Request() req){
+        const userId = req.user.userId
+        return this.serverMessageService.getAllByChannelId(channelId, userId);
     }
 }

@@ -19,11 +19,14 @@ export class ServerMessageService {
 
     async add(createServerMessageDto: CreateServerMessageDto, userId: number) {
         const server = await this.serverService.getById(createServerMessageDto.serverId);
+        //gets servers user enrolled
+        const servers = await this.serverService.getAllByUserId(userId);
+        //checks if the user sends the message to a server that user enrolled
+        const x = servers.find(server => server.id === createServerMessageDto.serverId)
         
-        //hangi kafayla yazdın bunu amk
-        // if (server.founder.id !== userId) {
-        //     throw new ForbiddenException("This server is not yours")
-        // }
+        if (x === null) {
+            throw new ForbiddenException()
+        }
 
         const channel = await this.channelService.getByChannelId(createServerMessageDto.channelId);
 
@@ -35,7 +38,13 @@ export class ServerMessageService {
         return this.serverMessageRepository.save(message);
     }
 
-    async getAllByChannelId(channelId: number) {
+    async getAllByChannelId(channelId: number, userId: number) {
+        const server = await this.serverService.getAllByUserId(userId)
+        
+        if (server == null || server.length <= 0) {
+            throw new ForbiddenException("You cannot see the messages of a channel of the server you are not enrolled!")
+        }
+
         const message = await this.serverMessageRepository.find({
             where: {
                 channel: { id: channelId }
