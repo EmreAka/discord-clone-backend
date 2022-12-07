@@ -6,9 +6,10 @@ import { ServerMessage } from './entity/server-message.entity';
 import { ServerModule } from 'src/server/server.module';
 import { ChannelModule } from 'src/channel/channel.module';
 import { UserModule } from 'src/user/user.module';
+import { ServerMessageGateway } from './server-message.gateway';
 
 @Module({
-  providers: [ServerMessageService],
+  providers: [ServerMessageService, ServerMessageGateway],
   controllers: [ServerMessageController],
   imports: [
     TypeOrmModule.forFeature([ServerMessage]),
