@@ -37,7 +37,7 @@ export class ServerMessageService {
         message.server = server
         message.user = await this.userService.getById(userId)
         const savedServerMessage = await this.serverMessageRepository.save(message);
-        this.serverMessageGateway.server.emit('messageRecieved', savedServerMessage)
+        this.serverMessageGateway.server.emit('messageRecieved', {serverId: savedServerMessage.server.id, channelId: savedServerMessage.channel.id})
         return savedServerMessage
     }
 
