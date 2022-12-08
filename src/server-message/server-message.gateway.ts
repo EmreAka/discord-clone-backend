@@ -1,7 +1,7 @@
 import { UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
-import { Socket } from 'socket.io';
+import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Socket, Server } from 'socket.io';
 import { WsAuthGuard } from "src/auth/guard/ws-auth.guard";
 
 @WebSocketGateway({
@@ -12,6 +12,9 @@ import { WsAuthGuard } from "src/auth/guard/ws-auth.guard";
     // }
 })
 export class ServerMessageGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+    @WebSocketServer()
+    server: Server;
+    
     handleDisconnect(client: Socket) {
         console.log("dis:",client.id)
     }

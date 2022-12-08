@@ -6,6 +6,7 @@ import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { CreateServerMessageDto } from './dto/create-server-message.dto';
 import { ServerMessage } from './entity/server-message.entity';
+import { ServerMessageGateway } from './server-message.gateway';
 
 @Injectable()
 export class ServerMessageService {
@@ -14,7 +15,8 @@ export class ServerMessageService {
         private serverMessageRepository: Repository<ServerMessage>,
         private channelService: ChannelService,
         private serverService: ServerService,
-        private userService: UserService
+        private userService: UserService,
+        private serverMessageGateway: ServerMessageGateway
     ) { }
 
     async add(createServerMessageDto: CreateServerMessageDto, userId: number) {
@@ -34,8 +36,9 @@ export class ServerMessageService {
         message.channel = channel
         message.server = server
         message.user = await this.userService.getById(userId)
-
-        return this.serverMessageRepository.save(message);
+        const savedServerMessage = await this.serverMessageRepository.save(message);
+        this.serverMessageGateway.server.emit('messageRecieved', savedServerMessage)
+        return savedServerMessage
     }
 
     async getAllByChannelId(channelId: number, userId: number) {
