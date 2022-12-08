@@ -13,18 +13,19 @@ import { WsAuthGuard } from "src/auth/guard/ws-auth.guard";
 })
 export class ServerMessageGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     handleDisconnect(client: Socket) {
-        console.log(client.id)
+        console.log("dis:",client.id)
     }
     handleConnection(client: Socket, ...args: any[]) {
-        console.log(client.id)
+        console.log("con:",client.id)
     }
     afterInit(server: any) {
     }
 
     @SubscribeMessage('sendMessage')
     @UseGuards(WsAuthGuard)
-    handleEvent(@MessageBody() data: string): string {
+    handleEvent(client: Socket, data: string): string {
         console.log(data)
+        console.log("sender:", client.id )
         return data;
     }
 }
