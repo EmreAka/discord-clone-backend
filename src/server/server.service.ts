@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
@@ -42,6 +42,12 @@ export class ServerService {
         let server = await this.serverRepository.findOne({where:{id: serverId}, relations: {
             users: true
         }})
+
+        server.users.forEach(user => {
+            if (user.id == userId) {
+                throw new BadRequestException("You already enrolled!")
+            }
+        });
 
         server.users.push(user)
 
