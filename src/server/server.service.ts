@@ -14,6 +14,7 @@ export class ServerService {
     ) {}
 
     add(createServerDto: CreateServerDto){
+        //TODO: Get user and pass it in server.
         const server = this.serverRepository.create(createServerDto);
         return this.serverRepository.save(server);
     }

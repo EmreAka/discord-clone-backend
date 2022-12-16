@@ -16,10 +16,8 @@ export class ChannelService {
     ) {}
 
     async add(createChannelDto: CreateChannelDto, userId: number){
-        const server = await this.serverService.getById(createChannelDto.serverId)
-        const category = await this.categoryService.getById(createChannelDto.categoryId);
-
-        if (server.founder.id !== userId) {
+        const category = await this.categoryService.getByIdWithDetails(createChannelDto.categoryId);
+        if (category.server.founder.id !== userId) {
             throw new ForbiddenException("You cannot add a channel to a category that belongs to the server that doesn't belong to you!")
         }
 

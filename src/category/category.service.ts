@@ -31,6 +31,17 @@ export class CategoryService {
         return this.categoryRepository.findOne({where: {id: id}})
     }
 
+    getByIdWithDetails(id: number){
+        return this.categoryRepository.findOne({
+            where: {id: id},
+            relations: {
+                server: {
+                    founder: true
+                }
+            }
+        })
+    }
+
     async getAllByServerId(serverId: number, userId: number){
         const server = await this.serverService.getAllByUserId(userId);
         const x = server.find(s => s.id === serverId)

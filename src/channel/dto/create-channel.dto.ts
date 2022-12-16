@@ -9,8 +9,8 @@ export class CreateChannelDto{
     @IsNotEmpty()
     description: string
 
-    @IsNotEmpty()
-    serverId: number
+    // @IsNotEmpty()
+    // serverId: number
 
     @IsNotEmpty()
     categoryId: number
