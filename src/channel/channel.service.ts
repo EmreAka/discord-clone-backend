@@ -11,7 +11,6 @@ export class ChannelService {
     constructor(
         @InjectRepository(Channel)
         private channelRepository: Repository<Channel>,
-        private serverService: ServerService,
         private categoryService: CategoryService,
     ) {}
 

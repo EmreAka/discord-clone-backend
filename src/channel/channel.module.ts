@@ -11,7 +11,6 @@ import { CategoryModule } from 'src/category/category.module';
   controllers: [ChannelController],
   imports: [
     TypeOrmModule.forFeature([Channel]),
-    ServerModule,
     CategoryModule
   ],
   exports: [
