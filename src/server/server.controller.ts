@@ -11,8 +11,9 @@ export class ServerController {
     ) { }
 
     @Post('')
-    add(@Body() createServerDto: CreateServerDto){
-        return this.serverService.add(createServerDto)
+    add(@Body() createServerDto: CreateServerDto, @Request() req){
+        const userId = req.user.userId;
+        return this.serverService.add(createServerDto, userId)
     }
 
     @Get('')

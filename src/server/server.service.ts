@@ -14,9 +14,12 @@ export class ServerService {
         private userService: UserService,
     ) { }
 
-    add(createServerDto: CreateServerDto) {
-        //TODO: Get user and pass it in server.
-        const server = this.serverRepository.create(createServerDto);
+    async add(createServerDto: CreateServerDto, userId: number) {
+        const user = await this.userService.getById(userId)
+        const server = await this.serverRepository.create(createServerDto);
+        
+        server.founder = user;
+
         return this.serverRepository.save(server);
     }
 
