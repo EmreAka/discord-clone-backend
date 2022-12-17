@@ -3,11 +3,11 @@ import { IsEmpty, IsNotEmpty, IsNumber, IsString } from "class-validator"
 export class Query{
     @IsNumber()
     @IsNotEmpty()
-    take: number
+    page: number
 
     @IsNumber()
     @IsNotEmpty()
-    skip: number
+    pageSize: number
 
     @IsString()
     keyword: string

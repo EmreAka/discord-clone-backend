@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
 import { Like, Repository } from 'typeorm';
 import CreateServerDto from './dto/create-server.dto';
+import { Query } from './dto/query.dto';
 import { Server } from './entity/server.entity';
 
 @Injectable()
@@ -31,11 +32,11 @@ export class ServerService {
         return this.serverRepository.find();
     }
 
-   async  getAllPaginated(query) {
-        const take = query.take || 10
-        const skip = query.skip || 0
+   async  getAllPaginated(query: Query) {
+        const take = query.pageSize || 10
+        const skip = query.page * 10 || 0
         const keyword = query.keyword || ''
-        
+
         const [result, total] = await this.serverRepository.findAndCount(
             {
                 where: { name: Like('%' + keyword + '%') },
