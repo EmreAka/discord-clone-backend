@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import CreateServerDto from './dto/create-server.dto';
+import { Query } from './dto/query.dto';
 import { ServerService } from './server.service';
 
 @Controller('server')
@@ -16,8 +17,9 @@ export class ServerController {
     }
 
     @Get('')
-    getAll(){
-        return this.serverService.getAll();
+    getAll(@Body() query: Query){
+        // return this.serverService.getAll();
+        return this.serverService.getAllPaginated(query)
     }
 
     @Get('enrolled')
