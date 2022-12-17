@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, Request, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import CreateServerDto from './dto/create-server.dto';
-import { Query } from './dto/query.dto';
 import { ServerService } from './server.service';
 
 @Controller('server')
@@ -17,8 +16,13 @@ export class ServerController {
     }
 
     @Get('')
-    getAll(@Body() query: Query){
+    getAll(
+        @Query('page', ParseIntPipe) page: number,
+        @Query('pageSize', ParseIntPipe) pageSize: number,
+        @Query('keyword') keyword: string
+    ){
         // return this.serverService.getAll();
+        const query = {page, pageSize, keyword}
         return this.serverService.getAllPaginated(query)
     }
 
