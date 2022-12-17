@@ -13,7 +13,7 @@ export class CategoryService {
         private serverService: ServerService,
     ) { }
 
-    async add(createCategoryDto: CreateCategoryDto, userId: number){
+    async add(createCategoryDto: CreateCategoryDto, userId: number) {
         const server = await this.serverService.getById(createCategoryDto.serverId);
 
         if (server.founder.id !== userId) {
@@ -27,13 +27,13 @@ export class CategoryService {
         return { id: categoryCreated.id, name: categoryCreated.name }
     }
 
-    getById(id: number){
-        return this.categoryRepository.findOne({where: {id: id}})
+    getById(id: number) {
+        return this.categoryRepository.findOne({ where: { id: id } })
     }
 
-    getByIdWithDetails(id: number){
+    getByIdWithDetails(id: number) {
         return this.categoryRepository.findOne({
-            where: {id: id},
+            where: { id: id },
             relations: {
                 server: {
                     founder: true
@@ -42,20 +42,21 @@ export class CategoryService {
         })
     }
 
-    async getAllByServerId(serverId: number, userId: number){
+    async getAllByServerId(serverId: number, userId: number) {
         const server = await this.serverService.getAllByUserId(userId);
         const x = server.find(s => s.id === serverId)
-        
+
         if (x == null) {
             throw new ForbiddenException();
         }
 
         return this.categoryRepository.find({
-            where: {server: {id: serverId},
-        },
-        relations: {
-            channels: true
-        }
-    })
+            where: {
+                server: { id: serverId },
+            },
+            relations: {
+                channels: true
+            }
+        })
     }
 }
