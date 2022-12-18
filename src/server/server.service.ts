@@ -18,6 +18,7 @@ export class ServerService {
         const user = await this.userService.getById(userId)
         const server = await this.serverRepository.create(createServerDto);
         
+        server.users.push(user)
         server.founder = user;
 
         return this.serverRepository.save(server);
