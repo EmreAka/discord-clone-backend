@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards, Request, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import CreateServerDto from './dto/create-server.dto';
+import { ServerDto } from './dto/server.dto';
 import { ServerService } from './server.service';
 
 @Controller('server')
@@ -17,6 +18,13 @@ export class ServerController {
     }
 
     @Get('')
+    async getById(@Query('id') id: number): Promise<ServerDto>{
+        //TODO: auth
+        const server = await this.serverService.getById(id)
+        return {id: server.id, name: server.name, founderUsername: server.founder.username}
+    }
+
+    @Get('paginate')
     getAll(
         @Query('page', ParseIntPipe) page: number,
         @Query('pageSize', ParseIntPipe) pageSize: number,
