@@ -12,6 +12,7 @@ import Category from './category/entity/category.entity';
 import { Channel } from './channel/entity/channel.entity';
 import { ServerMessageModule } from './server-message/server-message.module';
 import { ServerMessage } from './server-message/entity/server-message.entity';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -40,7 +41,8 @@ import { ServerMessage } from './server-message/entity/server-message.entity';
     ServerModule,
     CategoryModule,
     ChannelModule,
-    ServerMessageModule
-  ]
+    ServerMessageModule,
+    CloudinaryModule
+  ],
 })
 export class AppModule { }
