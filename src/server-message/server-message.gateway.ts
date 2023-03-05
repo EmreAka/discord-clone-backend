@@ -25,7 +25,7 @@ export class ServerMessageGateway implements OnGatewayInit, OnGatewayConnection,
     }
 
     @SubscribeMessage('sendMessage')
-    @UseGuards(WsAuthGuard)
+    // @UseGuards(WsAuthGuard)
     handleEvent(client: Socket, data: string): string {
         console.log(data)
         console.log("sender:", client.id )
